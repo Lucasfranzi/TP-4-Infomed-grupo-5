@@ -1,4 +1,3 @@
-
 UPDATE pacientes
 SET calle='Calle Corrientes 500'
 WHERE nombre ='Luciana Gómez' AND calle='Avenida Las Heras' AND ciudad ='Bs Aires';
