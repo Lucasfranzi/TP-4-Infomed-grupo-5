@@ -1,5 +1,5 @@
 ---quiero ver todas las formas escritas
-—SELECT DISTINCT ciudad FROM pacientes;
+---SELECT DISTINCT ciudad FROM pacientes;
 ---busco reducir las diferencias entre las opciones
 UPDATE pacientes
 SET ciudad =TRIM(INITCAP(ciudad));
