@@ -88,10 +88,12 @@ GROUP BY ciudad;
 
 ```sql
 CREATE VIEW vista_pacientes AS
-SELECT id_oaciente, nombre, fecha_nacimiento,
+SELECT id_paciente, nombre, fecha_nacimiento,
 	EXTRACT(YEAR FROM AGE(fecha_nacimiento)) AS edad
 FROM pacientes;
 ```
+
+
 3. La paciente, “Luciana Gómez”, ha cambiado de dirección. Antes vivía en “Avenida Las Heras 121” en “Buenos Aires”, pero ahora vive en “Calle Corrientes 500” en “Buenos Aires”. Actualizar la dirección de este paciente en la base de datos. 
 ```sql
 SELECT nombre, calle, ciudad FROM pacientes WHERE nombre=”Luciana Gómez”;
