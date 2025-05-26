@@ -173,7 +173,7 @@ ORDER BY cantidad_pacientes DESC;
 SELECT ciudad, id_sexo, COUNT(*) AS cantidad_pacientes
 FROM pacientes
 GROUP BY ciudad, id_sexo
-ORDER BY ciudad, cantidad_pacientes dDESC;
+ORDER BY ciudad, cantidad_pacientes DESC;
 ```
 
 ![Descripción de la imagen](output8.png)
