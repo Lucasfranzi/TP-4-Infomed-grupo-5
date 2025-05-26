@@ -1,4 +1,4 @@
-# Trabajo Practico 4-Inforamtica Medica-Grupo 5
+# Trabajo Practico 4-Informatica Medica-Grupo 5
 Este repositorio es para el trabajo practico de informatica medica del grupo 5 2025
 ## Integrantes:
 - Franzi, Lucas
