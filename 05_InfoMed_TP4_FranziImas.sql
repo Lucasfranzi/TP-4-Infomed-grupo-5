@@ -1,11 +1,11 @@
-—quiero ver todas las formas escritas
+---quiero ver todas las formas escritas
 —SELECT DISTINCT ciudad FROM pacientes;
-—busco reducir las diferencias entre las opciones
+---busco reducir las diferencias entre las opciones
 UPDATE pacientes
 SET ciudad =TRIM(INITCAP(ciudad));
 SELECT DISTINCT ciudad FROM pacientes;
-—la siguiente forma es bastante ineficiente para solucionar este problema
-—solo se puede hacer porque es una base chica
+---la siguiente forma es bastante ineficiente para solucionar este problema
+---solo se puede hacer porque es una base chica
 UPDATE pacientes
 SET ciudad = 'BUENOS AIRES'
 WHERE ciudad IN ('buenos aires','Bs Aires', 'Buenos Aires', 'Buenos aires', 'buenos Aires', 'Buenos    Aires');
