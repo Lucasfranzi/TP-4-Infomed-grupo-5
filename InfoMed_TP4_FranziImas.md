@@ -120,6 +120,7 @@ WHERE especialidad_id=4;
 ```
 
 ![Descripción de la imagen](output4.png)
+
 5. Puede pasar que haya inconsistencias en la forma en la que están escritos los nombres de las ciudades, ¿cómo se corrige esto? Agregar la query correspondiente. 
 
 ```sql
