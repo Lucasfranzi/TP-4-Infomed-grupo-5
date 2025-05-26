@@ -30,6 +30,7 @@ Consignas:
 
 **EJERCICIO 1**
 La clasificacion segun la estructura es RELACIONAL porque esta organizada en tablas que se relacionan entre si mediante claves que pueden ser primarias o foraneas
+
 Clave primaria: campo que identifica univocamente a un registro. Puede ser una clave primaria simple o una clave primaria compuesta.
 
 Clave foránea: campo que hace referencia a la clave primaria de otra tabla, estableciendo una relación entre ellas
@@ -77,13 +78,16 @@ GROUP BY ciudad;
 ```
 ![Descripción de la imagen](output1.png)
 ```sql
-CREATE INDEZ idx_ciudad ON pacientes(ciudad);
+CREATE INDEX idx_ciudad ON pacientes(ciudad);
 EXPLAIN ANALYZE
 SELECT ciudad, COUNT(*) AS cantidad_pacientes
 FROM pacientes
 GROUP BY ciudad;
 ```
 ![Descripción de la imagen](output1.2.png)
+
+Lo que se puede ver mirando el tiempo de ejecucion es que al darle a la base de datos una estructura ordenada con el indice, la busqueda se realiza mas rapdio
+
 2. Se tiene la fecha de nacimiento de los pacientes. Se desea calcular la edad de los pacientes y almacenarla de forma dinámica en el sistema ya que es un valor típicamente consultado, junto con otra información relevante del paciente. 
 
 ```sql
@@ -106,6 +110,7 @@ WHERE nombre ='Luciana Gómez' AND calle='Avenida Las Heras' AND ciudad ='Bs Air
 SELECT nombre, calle, ciudad FROM pacientes WHERE nombre='Luciana Gómez';
 ```
 ![Descripción de la imagen](output3.2.png)
+
 4. Seleccionar el nombre y la matrícula de cada médico cuya especialidad sea identificada por el id 4. 
 
 ```sql
@@ -118,14 +123,14 @@ WHERE especialidad_id=4;
 5. Puede pasar que haya inconsistencias en la forma en la que están escritos los nombres de las ciudades, ¿cómo se corrige esto? Agregar la query correspondiente. 
 
 ```sql
-—quiero ver todas las formas escritas
-—SELECT DISTINCT ciudad FROM pacientes;
-—busco reducir las diferencias entre las opciones
+---quiero ver todas las formas escritas
+SELECT DISTINCT ciudad FROM pacientes;
+---busco reducir las diferencias entre las opciones
 UPDATE pacientes
 SET ciudad =TRIM(INITCAP(ciudad));
 SELECT DISTINCT ciudad FROM pacientes;
-—la siguiente forma es bastante ineficiente para solucionar este problema
-—solo se puede hacer porque es una base chica
+---la siguiente forma es bastante ineficiente para solucionar este problema
+---solo se puede hacer porque es una base chica
 UPDATE pacientes
 SET ciudad = 'BUENOS AIRES'
 WHERE ciudad IN ('buenos aires','Bs Aires', 'Buenos Aires', 'Buenos aires', 'buenos Aires', 'Buenos    Aires');
@@ -141,6 +146,7 @@ where CIUDAD in ('Menzoa', 'Mendoza');
 SELECT DISTINCT ciudad FROM pacientes;
 ```
 ![Descripción de la imagen](output5.png)
+
 6. Obtener el nombre y la dirección de los pacientes que viven en Buenos Aires. 
 ```sql
 SELECT nombre, calle
@@ -149,6 +155,7 @@ WHERE (ciudad='BUENOS AIRES')
 ```
 
 ![Descripción de la imagen](output6.png)
+
 7. Cantidad de pacientes que viven en cada ciudad. 
 ```sql
 SELECT ciudad, COUNT(*) AS cantidad_pacientes
@@ -158,6 +165,7 @@ ORDER BY cantidad_pacientes DESC;
 ```
 
 ![Descripción de la imagen](output7.2.png)
+
 8. Cantidad de pacientes por sexo que viven en cada ciudad. 
 
 ```sql
@@ -179,6 +187,7 @@ GROUP BY M.nombre, r.id_medico
 ORDER BY cantidad_recetas DESC;
 ```
 ![Descripción de la imagen](output9.png)
+
 10. Obtener todas las consultas médicas realizadas por el médico con ID igual a 3 durante el mes de agosto de 2024. 
 
 ```sql
@@ -191,6 +200,7 @@ ORDER BY r.fecha;
 SELECT fecha FROM recetas WHERE id_medico=3 ORDER BY fecha;
 ```
 ![Descripción de la imagen](output10.png)
+
 11. Obtener el nombre de los pacientes junto con la fecha y el diagnóstico de todas las consultas médicas realizadas en agosto del 2024. 
 
 ```sql
@@ -203,6 +213,7 @@ ORDER BY co.fecha;
 ![Descripción de la imagen](output11.1.png)
 ![Descripción de la imagen](output11.2.png)
 ![Descripción de la imagen](output11.3.png)
+
 12. Obtener el nombre de los medicamentos prescritos más de una vez por el médico con ID igual a 2. 
 ```sql
 –-vemos todas las recetas del medico
@@ -222,6 +233,7 @@ HAVING COUNT(*)>1
 ORDER BY veces_prescrito DESC;
 ```
 ![Descripción de la imagen](output2.png)
+
 13. Obtener el nombre de los pacientes junto con la cantidad total de recetas que han recibido. 
 ```sql
 SELECT pa.nombre AS nombre_paciente, COUNT (*) AS cantidad_recetas
@@ -245,6 +257,7 @@ LIMIT 1;
 ```
 
 ![Descripción de la imagen](output14.png)
+
 15. Obtener el nombre del paciente junto con la fecha de su última consulta y el diagnóstico asociado. 
 
 ```sql
@@ -260,15 +273,16 @@ WHERE id_paciente=p.id_paciente);
 ```
 ![Descripción de la imagen](output15.1.png)
 ![Descripción de la imagen](output15.2.png)
+
 16. Obtener el nombre del médico junto con el nombre del paciente y el número total de consultas realizadas por cada médico para cada paciente, ordenado por médico y paciente.
 ```sql
 SELECT 
 m.nombre AS NombreMedico, p.nombre AS NombrePaciente,
 COUNT (c.id_consulta) AS TotalConsultas
 FROM Medicos m
-JOIN Consultas c ON m.id_medico = c.id_medico —se une con la tabla de medicos segun el id de consulta
-JOIN Pacientes p ON c.id_paciente=p.id_paciente —se une con la tabla de medicos segun la consulta del paciente con ese medico
-GROUP BY m.id_medico, p.id_paciente —grupa todas las consultas realizadas por un mismo medico a un mismo paciente
+JOIN Consultas c ON m.id_medico = c.id_medico ---se une con la tabla de medicos segun el id de consulta
+JOIN Pacientes p ON c.id_paciente=p.id_paciente ---se une con la tabla de medicos segun la consulta del paciente con ese medico
+GROUP BY m.id_medico, p.id_paciente ---agrupa todas las consultas realizadas por un mismo medico a un mismo paciente
 ORDER BY m.nombre, p.nombre;
 ```
 ![Descripción de la imagen](output16.1.png)
@@ -280,8 +294,8 @@ ORDER BY m.nombre, p.nombre;
 SELECT me.nombre AS NombreMedicamento, COUNT(r.id_receta) AS TotalRecetas,m.nombre AS NombreMedico,p.nombre AS NombrePaciente
 FROM Medicamentos me
 JOIN  Recetas r ON me.id_medicamento = r.id_medicamento
-JOIN Medicos m ON r.id_medico = m.id_medico - - - une medico con receta
-JOIN Pacientes p ON r.id_paciente = p.id_paciente - - -une receta con paciente
+JOIN Medicos m ON r.id_medico = m.id_medico --- une medico con receta
+JOIN Pacientes p ON r.id_paciente = p.id_paciente ---une receta con paciente
 GROUP BY me.id_medicamento, m.id_medico, p.id_paciente 
 ORDER BY TotalRecetas DESC;
 ```
